@@ -5,6 +5,7 @@ import android.R.attr.button
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -48,7 +49,11 @@ class MainActivity : AppCompatActivity() {
     private fun makeColored(boxView: View) {
 
         //https://stackoverflow.com/questions/14779259/get-background-color-of-a-layout
+        val colorNonString = (boxView.background as ColorDrawable).color
         val color = (boxView.background as ColorDrawable).color.toString()
+        val TAG = "fun makeColored()"
+        Log.d(TAG, "Color of boxView param background: $color")
+        Log.d(TAG, "Color of boxView param background NON STRING: $colorNonString")
 
         //Toast
         //https://developer.android.com/guide/topics/ui/notifiers/toasts
@@ -56,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         val toast = Toast.makeText(applicationContext, color, duration)
         toast.show()
 
-        //when is switch(case) for kotlin
+        //when is switch(case) for kotlin, color -1 is white, color 0 is transparent
         if(color == "-1" || color == "0"){
             when (boxView.id) {
 
@@ -72,7 +77,22 @@ class MainActivity : AppCompatActivity() {
                 else -> boxView.setBackgroundColor(Color.LTGRAY)
             }
         }
+        else {
+            when (boxView.id) {
 
+                // Boxes using Color class colors for background
+                R.id.box_one_text -> boxView.setBackgroundColor(Color.WHITE)
+                R.id.box_two_text -> boxView.setBackgroundColor(Color.WHITE)
+
+                // Boxes using Android color resources for background
+                R.id.box_three_text -> boxView.setBackgroundResource(android.R.color.white)
+                R.id.box_four_text -> boxView.setBackgroundResource(android.R.color.white)
+                R.id.box_five_text -> boxView.setBackgroundResource(android.R.color.white)
+
+                else -> boxView.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+        }
 
     }
 

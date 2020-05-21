@@ -77,12 +77,19 @@ class MainActivity : AppCompatActivity() {
                 //R.id.box_four_text -> boxView.setBackgroundResource(android.R.color.holo_green_dark)
                 R.id.box_five_text -> boxView.setBackgroundResource(android.R.color.holo_green_light)
 
+
+
+                //Have had a lot of trouble assignming these background resources. I had to reassign the "style" of the buttons, not using
+                //the original background color and style of the default button style, for some reason.
                 // Boxes using custom colors for background
                 R.id.red_button -> box_three_text.setBackgroundResource(R.color.my_red)
                 R.id.yellow_button -> box_four_text.setBackgroundResource(android.R.color.holo_orange_light)
-                //R.id.green_button -> boxView.setBackgroundResource(android.R.color.holo_green_dark)
-                //R.id.green_button -> box_four_text.setBackgroundResource(R.color.my_green)
-                R.id.green_button -> box_four_text.setBackgroundResource(R.drawable.rectangle_button)
+
+                //Pretty sure this version works, needs to be fixed a little bit though...
+                R.id.green_button -> box_four_text.setBackgroundResource(R.color.my_green)
+
+                // This is another option, using the drawable resource, but the app crashes if the textview is pressed after the button, not a great solution
+                //R.id.green_button -> box_four_text.setBackgroundResource(R.drawable.rectangle_button)
 
 
 

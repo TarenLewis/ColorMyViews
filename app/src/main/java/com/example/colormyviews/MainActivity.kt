@@ -7,10 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.colormyviews.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 //bias: position of element along horizontal or vertical axis
@@ -18,15 +18,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     //This will be used to bind these boxes
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
-    // Status of boxes, to keep track of whether they are currently colored or not.
-    private var boxOne_colored: Boolean = false
-    private var boxTwo_colored: Boolean = false
-    private var boxThree_colored: Boolean = false
-    private var boxFour_colored: Boolean = false
-    private var boxFive_colored: Boolean = false
-
+    // Random integer used to create random color
+    private lateinit var random: Random
+    private lateinit var randomColor: Color
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,49 +32,64 @@ class MainActivity : AppCompatActivity() {
         setListeners()
     }
 
-    private fun setListeners(){
+    private fun setListeners() {
         val clickableViews: List<View> =
-            listOf(box_one_text, box_two_text, box_three_text, box_four_text, box_five_text, constraint_layout)
+            listOf(
+                box_one_text,
+                box_two_text,
+                box_three_text,
+                box_four_text,
+                box_five_text,
+                constraint_layout,
+                red_button,
+                yellow_button,
+                green_button
+            )
 
         //Iterates through all of the views in the clickableViews list and sets an on click listener to make that view colored when it is clicked.
-        for (item in clickableViews){
-            item.setOnClickListener{makeColored(it)}
+        for (item in clickableViews) {
+            item.setOnClickListener { makeColored(it) }
         }
     }
 
     private fun makeColored(boxView: View) {
 
         //https://stackoverflow.com/questions/14779259/get-background-color-of-a-layout
-        val colorNonString = (boxView.background as ColorDrawable).color
-        val color = (boxView.background as ColorDrawable).color.toString()
+        val color = (boxView.background as ColorDrawable).color
         val TAG = "fun makeColored()"
-        Log.d(TAG, "Color of boxView param background: $color")
-        Log.d(TAG, "Color of boxView param background NON STRING: $colorNonString")
-        
-/*
-        //Toast
-        //https://developer.android.com/guide/topics/ui/notifiers/toasts
-        val duration = Toast.LENGTH_SHORT
-        val toast = Toast.makeText(applicationContext, color, duration)
-        toast.show()*/
+        Log.d(TAG, "Color of "+ boxView + "background: $color")
+
+        random = Random()
+
+        val randomColor = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
+        //boxView.setBackgroundColor(randomColor)
 
         //when is switch(case) for kotlin, color -1 is white, color 0 is transparent
-        if(color == "-1" || color == "0"){
+        if (color == -1 || color == 0) {
             when (boxView.id) {
 
                 // Boxes using Color class colors for background
-                R.id.box_one_text   -> boxView.setBackgroundColor(Color.DKGRAY)
-                R.id.box_two_text   -> boxView.setBackgroundColor(Color.GRAY)
+                R.id.box_one_text -> boxView.setBackgroundColor(Color.DKGRAY)
+                R.id.box_two_text -> boxView.setBackgroundColor(Color.GRAY)
 
                 // Boxes using Android color resources for background
                 R.id.box_three_text -> boxView.setBackgroundResource(android.R.color.holo_green_light)
-                R.id.box_four_text  -> boxView.setBackgroundResource(android.R.color.holo_green_dark)
-                R.id.box_five_text  -> boxView.setBackgroundResource(android.R.color.holo_green_light)
+                //R.id.box_four_text -> boxView.setBackgroundResource(android.R.color.holo_green_dark)
+                R.id.box_five_text -> boxView.setBackgroundResource(android.R.color.holo_green_light)
+
+                // Boxes using custom colors for background
+                R.id.red_button -> box_three_text.setBackgroundResource(R.color.my_red)
+                R.id.yellow_button -> box_four_text.setBackgroundResource(android.R.color.holo_orange_light)
+                //R.id.green_button -> boxView.setBackgroundResource(android.R.color.holo_green_dark)
+                //R.id.green_button -> box_four_text.setBackgroundResource(R.color.my_green)
+                R.id.green_button -> box_four_text.setBackgroundResource(R.drawable.rectangle_button)
+
+
+
 
                 else -> boxView.setBackgroundColor(Color.LTGRAY)
             }
-        }
-        else {
+        } else {
             when (boxView.id) {
 
                 // Boxes using Color class colors for background
@@ -89,6 +100,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.box_three_text -> boxView.setBackgroundResource(android.R.color.white)
                 R.id.box_four_text -> boxView.setBackgroundResource(android.R.color.white)
                 R.id.box_five_text -> boxView.setBackgroundResource(android.R.color.white)
+
+/*
+
+                // Boxes using custom colors for background
+                R.id.red_button -> box_three_text.setBackgroundResource(android.R.color.white)
+                R.id.yellow_button -> box_four_text.setBackgroundResource(android.R.color.white)
+                R.id.green_button -> box_five_text.setBackgroundResource(android.R.color.white)
+*/
+
 
                 else -> boxView.setBackgroundColor(Color.TRANSPARENT)
             }

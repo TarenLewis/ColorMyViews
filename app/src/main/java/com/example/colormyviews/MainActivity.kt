@@ -54,12 +54,13 @@ class MainActivity : AppCompatActivity() {
         val TAG = "fun makeColored()"
         Log.d(TAG, "Color of boxView param background: $color")
         Log.d(TAG, "Color of boxView param background NON STRING: $colorNonString")
-
+        
+/*
         //Toast
         //https://developer.android.com/guide/topics/ui/notifiers/toasts
         val duration = Toast.LENGTH_SHORT
         val toast = Toast.makeText(applicationContext, color, duration)
-        toast.show()
+        toast.show()*/
 
         //when is switch(case) for kotlin, color -1 is white, color 0 is transparent
         if(color == "-1" || color == "0"){
